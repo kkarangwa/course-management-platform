@@ -1,3 +1,4 @@
+require('module-alias/register');
 const app = require('./app');
 const { sequelize } = require('./models');
 const { redisClient } = require('./config/redis');

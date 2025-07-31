@@ -1,34 +1,43 @@
-'use strict';
+// models/courseOffering.js
 
-const Sequelize = require('sequelize');
-const sequelize = require('../config/database');
+module.exports = (sequelize, DataTypes) => {
+  const CourseOffering = sequelize.define('CourseOffering', {
+    // Define your model attributes here, example:
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+    },
+    courseId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      // optionally add references if you want FK constraints:
+      // references: { model: 'Courses', key: 'id' }
+    },
+    moduleId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    facilitatorId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    startDate: {
+      type: DataTypes.DATE,
+      allowNull: true,
+    },
+    endDate: {
+      type: DataTypes.DATE,
+      allowNull: true,
+    },
+    // Add any other fields you want
+  }, {
+    tableName: 'CourseOfferings',  // optional, by default Sequelize pluralizes model name
+    timestamps: true,  // or false if you don't want createdAt, updatedAt
+  });
 
-// Import models
-const User = require('./user')(sequelize, Sequelize.DataTypes);
-const Module = require('./module')(sequelize, Sequelize.DataTypes);
-const Cohort = require('./cohort')(sequelize, Sequelize.DataTypes);
-const Course = require('./course')(sequelize, Sequelize.DataTypes);  // formerly class.js
-const CourseOffering = require('./courseOffering')(sequelize, Sequelize.DataTypes); // if you have this model
+  // Associations can also be added here if you want
+  // e.g. CourseOffering.associate = function(models) { ... }
 
-// Define associations
-User.hasMany(CourseOffering, { as: 'facilitatorAllocations', foreignKey: 'facilitatorId' });
-CourseOffering.belongsTo(User, { as: 'facilitator', foreignKey: 'facilitatorId' });
-
-Module.hasMany(CourseOffering, { foreignKey: 'moduleId' });
-CourseOffering.belongsTo(Module, { foreignKey: 'moduleId' });
-
-// Other associations can go here...
-// Course.belongsToMany(Cohort, { through: 'CohortCourses', ... });
-
-const db = {
-  sequelize,
-  Sequelize,
-  User,
-  Module,
-  Cohort,
-  Course,
-  CourseOffering,
-  // Add any other models here
+  return CourseOffering;
 };
-
-module.exports = db;

@@ -1,13 +1,16 @@
+require('module-alias/register');
 const express = require('express');
 const app = express();
-const bodyParser = require('body-parser');
+
 const authRoutes = require('./routes/auth');
+const courseOfferingRoutes = require('./routes/courseOfferingRoutes'); // add this line
 
 // Middleware
-app.use(bodyParser.json());
+app.use(express.json()); // replaces bodyParser
 
 // Routes
 app.use('/api/auth', authRoutes);
+app.use('/api/course-offerings', courseOfferingRoutes); // add this line
 
 // Start the server
 const PORT = process.env.PORT || 3000;

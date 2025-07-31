@@ -1,11 +1,10 @@
+// app.js
 const express = require('express');
-const router = express.Router();
-const courseController = require('../controllers/courseController');
+const app = express();
 
-router.post('/', courseController.createCourse);
-router.get('/', courseController.getCourses);
-router.get('/:id', courseController.getCourseById);
-router.put('/:id', courseController.updateCourse);
-router.delete('/:id', courseController.deleteCourse);
+const courseRoutes = require('./routes/courseRoutes'); 
 
-module.exports = router;
+app.use(express.json()); // Middleware to parse JSON
+app.use('/api/courses', courseRoutes); // 
+
+module.exports = app;
