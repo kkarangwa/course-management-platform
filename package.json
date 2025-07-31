@@ -17,14 +17,15 @@
     "express-rate-limit": "^6.7.0",
     "helmet": "^7.0.0",
     "jsonwebtoken": "^9.0.2",
+    "module-alias": "^2.2.2",
     "mysql2": "^3.14.3",
     "pg": "^8.11.1",
     "pg-hstore": "^2.3.4",
     "redis": "^5.7.0",
-    "sequelize": "^6.32.1",
+    "sequelize": "^6.37.7",
+    "sqlite3": "^5.1.7",
     "swagger-jsdoc": "^6.2.8",
-    "swagger-ui-express": "^4.6.3",
-    "module-alias": "^2.2.2"
+    "swagger-ui-express": "^4.6.3"
   },
   "devDependencies": {
     "eslint": "^8.47.0",

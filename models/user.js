@@ -1,55 +1,34 @@
-const { DataTypes } = require('sequelize');
-const bcrypt = require('bcryptjs');
-
-module.exports = (sequelize) => {
+module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true
     },
-    firstName: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: { len: [2, 50] }
-    },
-    lastName: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: { len: [2, 50] }
-    },
     email: {
       type: DataTypes.STRING,
       allowNull: false,
       unique: true,
-      validate: { isEmail: true }
+      validate: {
+        isEmail: true
+      }
     },
     password: {
       type: DataTypes.STRING,
-      allowNull: false,
-      validate: { len: [6, 100] }
+      allowNull: false
     },
     role: {
-      type: DataTypes.ENUM('manager', 'facilitator', 'student'),
+      type: DataTypes.STRING,
       allowNull: false,
-      defaultValue: 'student'
-    }
-  }, {
-    hooks: {
-      beforeCreate: async (user) => {
-        user.password = await bcrypt.hash(user.password, 12);
-      },
-      beforeUpdate: async (user) => {
-        if (user.changed('password')) {
-          user.password = await bcrypt.hash(user.password, 12);
-        }
+      defaultValue: 'student',
+      validate: {
+        isIn: [['student', 'instructor', 'admin']]
       }
     }
+  }, {
+    tableName: 'users',
+    timestamps: true
   });
-
-  User.prototype.validatePassword = async function(password) {
-    return await bcrypt.compare(password, this.password);
-  };
 
   return User;
 };

@@ -1,43 +1,25 @@
-// models/courseOffering.js
+const { Sequelize, DataTypes } = require('sequelize');
+const path = require('path');
 
-module.exports = (sequelize, DataTypes) => {
-  const CourseOffering = sequelize.define('CourseOffering', {
-    // Define your model attributes here, example:
-    id: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      autoIncrement: true,
-    },
-    courseId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      // optionally add references if you want FK constraints:
-      // references: { model: 'Courses', key: 'id' }
-    },
-    moduleId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    facilitatorId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    startDate: {
-      type: DataTypes.DATE,
-      allowNull: true,
-    },
-    endDate: {
-      type: DataTypes.DATE,
-      allowNull: true,
-    },
-    // Add any other fields you want
-  }, {
-    tableName: 'CourseOfferings',  // optional, by default Sequelize pluralizes model name
-    timestamps: true,  // or false if you don't want createdAt, updatedAt
-  });
+// Create Sequelize instance
+const sequelize = new Sequelize({
+  dialect: 'sqlite',
+  storage: path.join(__dirname, '../database.sqlite'),
+  logging: false, // Set to console.log to see SQL queries
+});
 
-  // Associations can also be added here if you want
-  // e.g. CourseOffering.associate = function(models) { ... }
+// Import models
+const User = require('./user')(sequelize, DataTypes);
+const CourseOffering = require('./courseOffering')(sequelize, DataTypes);
 
-  return CourseOffering;
+// Define associations here if needed
+// User.hasMany(CourseOffering);
+// CourseOffering.belongsTo(User);
+
+// Export everything
+module.exports = {
+  sequelize,
+  Sequelize,
+  User,
+  CourseOffering
 };

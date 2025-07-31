@@ -1,10 +1,8 @@
 require('module-alias/register');
 const app = require('./app');
 const { sequelize } = require('./models');
-const { redisClient } = require('./config/redis');
-const courseOfferingRoutes = require('./routes/courseOfferingRoutes');
-app.use('/api/course-offerings', courseOfferingRoutes);
-require('./workers/notificationWorker'); // Start background workers
+const { connectRedis } = require('./config/redis');
+// require('./workers/notificationWorker'); // Start background workers
 
 const PORT = process.env.PORT || 3000;
 
@@ -13,15 +11,20 @@ async function startServer() {
     // Test database connection
     await sequelize.authenticate();
     console.log('Database connection established successfully.');
-
+    
     // Sync database models
     await sequelize.sync({ alter: true });
     console.log('Database synchronized successfully.');
-
-    // Test Redis connection
-    await redisClient.ping();
-    console.log('Redis connection established successfully.');
-
+    
+    // Connect to Redis
+    try {
+      await connectRedis();
+      console.log('Redis connection established successfully.');
+    } catch (redisError) {
+      console.warn('Redis connection failed, continuing without Redis:', redisError.message);
+      // Continue without Redis - your app should still work
+    }
+    
     // Start server
     app.listen(PORT, () => {
       console.log(`Server running on port ${PORT}`);
