@@ -1,8 +1,8 @@
 const app = require('./app');
 const { sequelize } = require('./models');
 const { redisClient } = require('./config/redis');
-const moduleRoutes = require('./routes/moduleRoutes');
-app.use('/api/modules', moduleRoutes);
+const courseOfferingRoutes = require('./routes/courseOfferingRoutes');
+app.use('/api/course-offerings', courseOfferingRoutes);
 require('./workers/notificationWorker'); // Start background workers
 
 const PORT = process.env.PORT || 3000;
