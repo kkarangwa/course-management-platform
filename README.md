@@ -12,7 +12,6 @@ This is the backend I built for managing a course platform. It handles users (wi
 - Supports multiple languages (currently English and French).
 - Swagger docs are included for testing endpoints easily.
 
----
 
 ## Tech Stack I Used
 
@@ -23,12 +22,12 @@ This is the backend I built for managing a course platform. It handles users (wi
 - **i18n** – for localization
 - **Swagger UI** – for API documentation and testing
 
----
 
 ## How to Run This (Local Setup)
 
 ### 1. Clone the project
 
 ```bash
-git clone https://github.com/kkarangwa/course-management-platform
+git clone https://github.com/kkarangwa/course-management-platform.git
 cd course-management-platform
+
