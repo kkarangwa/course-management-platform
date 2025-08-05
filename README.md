@@ -31,3 +31,6 @@ This is the backend I built for managing a course platform. It handles users (wi
 git clone https://github.com/kkarangwa/course-management-platform.git
 cd course-management-platform
 
+**Link to the video description**
+https://www.loom.com/share/452b8242334c4dffab2ac5cbcbd50cae?sid=aa3146f4-0088-4bea-9774-95333e09f927
+
